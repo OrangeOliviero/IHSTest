@@ -52,7 +52,7 @@ define run-test
 	@echo "-------------------------------------------"
 
 endef
-test: TEST_DIRS=$(wildcard test/*)
+test: TEST_DIRS=$(sort $(wildcard test/test-*))
 test: $(TARGET_EXECUTABLE)
 	$(foreach dir,$(TEST_DIRS),$(call run-test,$(dir)))
 

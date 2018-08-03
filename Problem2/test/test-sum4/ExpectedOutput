@@ -1,0 +1,2 @@
+Original array:    1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 2
+Transformed array: 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 2
