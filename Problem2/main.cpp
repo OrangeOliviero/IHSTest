@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <vector>
 
 #include "ArrayTransformer.h"
 
@@ -16,6 +17,8 @@ enum class Operation
 
 void printUsage();
 void printArray(int array[], size_t size);
+template<template<typename...> class Container, typename Type>
+void printArray(Container<Type>);
 Operation getOperation(const string& operation);
 
 int main(int argc, const char* argv[])
@@ -45,7 +48,7 @@ int main(int argc, const char* argv[])
     break;
   }
 
-  int(*transformOperation)(int, int, int*) = nullptr;
+  int(*transformOperation)(int, int, const int*) = nullptr;
   switch (operation) {
   case Operation::none:
     cerr << "Error: No operation specified" << endl;
@@ -73,11 +76,11 @@ int main(int argc, const char* argv[])
     return 2;
   }
 
-  int array[numValues];
+  vector<int> array;
   for (idx = 0; idx < numValues; ++idx) {
     string arg = argv[argc - numValues + idx];
     try {
-      array[idx] = stoi(arg);
+      array.push_back(stoi(arg));
     } catch (invalid_argument& exc) {
       cerr << "Error reading array value " << arg << " (" << exc.what() << ")" << endl;
       return 2;
@@ -85,12 +88,12 @@ int main(int argc, const char* argv[])
   }
 
   cout << "Original array:    ";
-  printArray(array, numValues);
+  printArray(array);
 
-  transformArray(array, numValues, transformOperation);
+  transformArray(array, transformOperation);
 
   cout << "Transformed array: ";
-  printArray(array, numValues);
+  printArray(array);
 }
 
 void printUsage()
@@ -110,6 +113,20 @@ void printArray(int array[], size_t size)
       cout << ", ";
     }
     cout << array[idx];
+  }
+  cout << endl;
+}
+
+template<template<typename...> class Container, typename Type>
+void printArray(Container<Type> values)
+{
+  bool printComma = false;
+  for (const auto& value : values) {
+    if (printComma) {
+      cout << ", ";
+    }
+    cout << value;
+    printComma = true;
   }
   cout << endl;
 }
