@@ -30,16 +30,16 @@ int main(int argc, const char* argv[])
     string arg = argv[idx++];
     if (arg == "-o") {
       if (idx == argc) {
-	cerr << "Error: Expected an argument to -o" << endl;
-	return 2;
+        cerr << "Error: Expected an argument to -o" << endl;
+        return 2;
       }
 
       arg = argv[idx++];
       operation = getOperation(arg);
       if (operation == Operation::none) {
-	cerr << "Error: Invalid operation (" << arg << ")" << endl;
-	printUsage();
-	return 2;
+        cerr << "Error: Invalid operation (" << arg << ")" << endl;
+        printUsage();
+        return 2;
       }
       continue;
     }

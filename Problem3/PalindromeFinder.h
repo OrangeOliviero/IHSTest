@@ -16,7 +16,7 @@ public:
 };
 
 bool findPalindromes(const std::string& input, size_t start, size_t end,
-		     PalindromeCache& checkedCache, PalindromeCache& foundPalindromes);
+                     PalindromeCache& checkedCache, PalindromeCache& foundPalindromes);
 
 bool isPalindrome(const std::string& input, size_t start, size_t end);
 

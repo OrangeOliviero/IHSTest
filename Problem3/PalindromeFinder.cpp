@@ -7,7 +7,7 @@ using namespace std;
 static void addFoundPalindrome(size_t start, size_t end, PalindromeCache& foundPalindromes);
 
 bool findPalindromes(const string& input, size_t start, size_t end,
-		     PalindromeCache& checkedCache, PalindromeCache& foundPalindromes)
+                     PalindromeCache& checkedCache, PalindromeCache& foundPalindromes)
 {
   if (end <= start) return false;
 
@@ -61,7 +61,7 @@ void addFoundPalindrome(size_t start, size_t end, PalindromeCache& foundPalindro
 }
 
 bool PalindromeKeyComparator::operator()(const PalindromeCacheKey& left,
-					 const PalindromeCacheKey& right)
+                                         const PalindromeCacheKey& right)
 {
   // Technically the length is these + 1, but since we're only comparing the two,
   //  it cancels out anyways
