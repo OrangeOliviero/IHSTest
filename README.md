@@ -31,3 +31,26 @@ Problem-specific notes:
      - Only the current value is to be modified by the operation
      - The operation can only use the current value, previous value, and previous result.
  - Problem 3:
+   - Sub-palindromes of palindromes aren't reported (e.g. ABBA will not report BB as well).
+     - This is because the example output did not include these, and they are somewhat redundant
+       as trimming the outer characters of a palindrome equally necessarily results in another
+       palindrome (excepting when only one character remains).
+   - Palindrome output is sorted in the following manner:
+     - Larger palindromes are reported first
+     - Palindromes of the same size are reported in order of where they occur in the string
+       (left to right).
+     - Efficiency was obtained at the expense of memory - a cache of processed portions is
+       retained so that the same substring isn't re-processed repeatedly.
+
+General notes:
+ - The problem examples have all been incorporated into tests. Additional tests were added.
+ - Both Problem2 and Problem3's binaries will print their expected usage if mis-usage is detected.
+ - Problem2 uses the 'stoi' utility for parsing input values, which succeeds so long as the first
+    portion of the string can be interpreted as an integer (e.g. 6.5, 6.s, 6 all get interpreted as 6).
+   This is an artifact of how the example is implemented, not a limitation of the library function.
+ - The build system puts generated object/dependency files in the same directory as the source, and
+    the output in a sub-directory of the source. This is generally non-ideal for a larger-scale
+    project, but acceptable for small-scale ones such as these.
+ - The test system leaves test output in the same directory as the tests if they fail. This is both
+    good and bad - it allows for easier debugging/comparisons, but also pollutes the directory
+    structure if they aren't cleaned up. A more robust test system would do a better job of both.
