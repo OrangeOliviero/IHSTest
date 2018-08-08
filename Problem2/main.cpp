@@ -75,7 +75,8 @@ int main(int argc, const char* argv[])
     return 2;
   }
 
-  int array[numValues];
+  // We could use variable-length arrays here if our compiler supports that extension
+  int* array = new int[numValues];
   for (idx = 0; idx < numValues; ++idx) {
     string arg = argv[argc - numValues + idx];
     try {
@@ -95,6 +96,8 @@ int main(int argc, const char* argv[])
 
   cout << "Transformed array: ";
   printArray(begin, end);
+
+  delete[] array;
 }
 
 void printUsage()
