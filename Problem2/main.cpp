@@ -16,9 +16,8 @@ enum class Operation
 };
 
 void printUsage();
-void printArray(int array[], size_t size);
-template<template<typename...> class Container, typename Type>
-void printArray(Container<Type>);
+template<class Iterator>
+void printArray(Iterator iterator, Iterator endIt);
 Operation getOperation(const string& operation);
 
 int main(int argc, const char* argv[])
@@ -76,24 +75,26 @@ int main(int argc, const char* argv[])
     return 2;
   }
 
-  vector<int> array;
+  int array[numValues];
   for (idx = 0; idx < numValues; ++idx) {
     string arg = argv[argc - numValues + idx];
     try {
-      array.push_back(stoi(arg));
+      array[idx] = stoi(arg);
     } catch (invalid_argument& exc) {
       cerr << "Error reading array value " << arg << " (" << exc.what() << ")" << endl;
       return 2;
     }
   }
+  auto begin = &array[0];
+  auto end = &array[numValues];
 
   cout << "Original array:    ";
-  printArray(array);
+  printArray(begin, end);
 
-  transformArray(array, transformOperation);
+  transformArray(begin,  end, transformOperation);
 
   cout << "Transformed array: ";
-  printArray(array);
+  printArray(begin, end);
 }
 
 void printUsage()
@@ -106,26 +107,15 @@ void printUsage()
   cout << "  Values are space-delimeted and assumed to be integers." << endl;
 }
 
-void printArray(int array[], size_t size)
-{
-  for (size_t idx = 0; idx < size; ++idx) {
-    if (idx > 0) {
-      cout << ", ";
-    }
-    cout << array[idx];
-  }
-  cout << endl;
-}
-
-template<template<typename...> class Container, typename Type>
-void printArray(Container<Type> values)
+template<class Iterator>
+void printArray(Iterator iterator, Iterator endIt)
 {
   bool printComma = false;
-  for (const auto& value : values) {
+  while (iterator != endIt) {
     if (printComma) {
       cout << ", ";
     }
-    cout << value;
+    cout << *iterator++;
     printComma = true;
   }
   cout << endl;

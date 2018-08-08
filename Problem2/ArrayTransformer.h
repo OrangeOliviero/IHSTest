@@ -1,31 +1,11 @@
 #ifndef __ARRAYTRANSFORMER_H__
 #define __ARRAYTRANSFORMER_H__
 
-template<typename Type>
-void transformArray(Type values[], size_t size, Type(*transform)(Type, Type, const Type*))
+template<class Iterator, typename Type>
+void transformArray(Iterator iterator, Iterator endIt, Type(*transform)(Type, Type, const Type*))
 {
-  if (size <= 1) return;
+  if (iterator == endIt) return;
 
-  // Get our initial state and transform the first value
-  Type prevResult = transform(values[1], values[0], nullptr);
-  Type prevValue = values[1];
-  values[1] = prevResult;
-
-  // Transform the rest of the array
-  for (size_t idx = 2; idx < size; ++idx) {
-    prevResult = transform(values[idx], prevValue, &prevResult);
-    prevValue = values[idx];
-    values[idx] = prevResult;
-  }
-}
-
-template<template<typename...> class Container, typename Type>
-void transformArray(Container<Type>& values, Type(*transform)(Type, Type, const Type*))
-{
-  if (values.empty()) return;
-
-  auto iterator = values.begin();
-  auto endIt = values.end();
   Type prevValue = *iterator++;
   if (iterator == endIt) return;
 
